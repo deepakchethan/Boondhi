@@ -1,0 +1,27 @@
+{
+  "name": "@deepakchethan/laddu",
+  "version": "0.0.0",
+  "description": "A dummy crypto-currency based on blockchain whitepaper",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dodococo/Laddu.git"
+  },
+  "keywords": [
+    "laddu",
+    "cryptocurrency",
+    "blockchain"
+  ],
+  "author": "deepakchethan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dodococo/Laddu/issues"
+  },
+  "homepage": "https://github.com/dodococo/Laddu#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}
