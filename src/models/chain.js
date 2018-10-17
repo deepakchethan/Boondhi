@@ -9,7 +9,7 @@ class Chain {
     return this.chain;
   }
 
-  static addBlock(boondhi) {
+  addBlock(boondhi) {
     const prevBlock = this.chain[this.chain.length - 1];
     const block = Block.mineBlock(prevBlock, boondhi);
     this.chain.push(block);
