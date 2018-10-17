@@ -4,7 +4,9 @@
   "description": "A dummy cryptocurrency running on blockchain, based on bitcoin whitepaper",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node ./src/app",
+    "dev":"nodemon ./src/app"
   },
   "repository": {
     "type": "git",
@@ -29,6 +31,7 @@
     "nodemon": "^1.18.4"
   },
   "dependencies": {
-    "crypto-js": "^3.1.9-1"
+    "crypto-js": "^3.1.9-1",
+    "express": "^4.16.4"
   }
 }
