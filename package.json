@@ -1,26 +1,26 @@
 {
-  "name": "@deepakchethan/laddu",
+  "name": "@deepakchethan/boondhi",
   "version": "0.0.0",
-  "description": "A dummy crypto-currency based on blockchain whitepaper",
+  "description": "A dummy cryptocurrency running on blockchain, based on bitcoin whitepaper",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dodococo/Laddu.git"
+    "url": "git+https://github.com/dodococo/Boondhi.git"
   },
   "keywords": [
-    "laddu",
-    "cryptocurrency",
-    "blockchain"
+    "Boondhi",
+    "Crypto",
+    "Blockchain"
   ],
-  "author": "deepakchethan",
+  "author": "Deepak Chethan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dodococo/Laddu/issues"
+    "url": "https://github.com/dodococo/Boondhi/issues"
   },
-  "homepage": "https://github.com/dodococo/Laddu#readme",
+  "homepage": "https://github.com/dodococo/Boondhi#readme",
   "devDependencies": {
     "nodemon": "^1.18.4"
   }
