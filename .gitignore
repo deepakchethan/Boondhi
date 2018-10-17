@@ -31,3 +31,4 @@
 *.out
 *.app
 node_modules
+coverage
