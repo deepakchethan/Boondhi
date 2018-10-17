@@ -1,3 +1,4 @@
+
 const Block = require('../src/models/block');
 
 
@@ -13,14 +14,14 @@ it('should have genesis block values equal to default', () => {
   const block = Block.genesis();
   expect(block.timeStamp).toBe('0000');
   expect(block.prevHash).toBe('0000');
-  expect(block.currHash).toBe('dpak-ctan');
+  expect(block.currHash).toBe(Block.hash('0000', '0000', {}));
   expect(block.boondhis).toEqual({});
 });
 
 it('should have create a first block with values provided', () => {
   const block = Block.mineBlock(Block.genesis(), {});
   expect(block.prevHash).toBe(Block.genesis().currHash);
-  expect(block.currHash).toBe('todo-hash');
+  expect(block.currHash).toBe(Block.hash(block.timeStamp, block.prevHash, block.boondhis));
   expect(block.boondhis).toEqual({});
 });
 

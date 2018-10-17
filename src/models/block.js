@@ -1,3 +1,5 @@
+const SHA256 = require('crypto-js/sha256');
+
 class Block {
   constructor(timeStamp, prevHash, currHash, boondhis) {
     this.timeStamp = timeStamp;
@@ -15,15 +17,19 @@ class Block {
   }
 
   static genesis() {
-    return new this('0000', '0000', 'dpak-ctan', {});
+    return new this('0000', '0000', Block.hash('0000', '0000', {}), {});
   }
 
   static mineBlock(lastBlock, data) {
     const timeStamp = Date.now();
     const prevHash = lastBlock.currHash;
-    const currHash = 'todo-hash';
+    const currHash = Block.hash(timeStamp, prevHash, data);
 
     return new this(timeStamp, prevHash, currHash, data);
+  }
+
+  static hash(timeStamp, prevHash, data) {
+    return SHA256(`${timeStamp}${prevHash}${data}`).toString();
   }
 }
 
