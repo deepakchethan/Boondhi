@@ -20,12 +20,21 @@ class P2pServer {
   connectSocket(socket) {
     this.sockets.push(socket);
     console.log('Socket Connected');
+    this.messageHandler(socket);
+    socket.send(JSON.stringify(this.blockchain));
   }
 
   connectToPeers() {
     peers.forEach((peer) => {
       const socket = new WebSocket(peer);
       socket.on('open', () => this.connectSocket(socket));
+    });
+  }
+
+  messageHandler(socket) {
+    socket.on('message', (message) => {
+      const data = JSON.parse(message);
+      console.log(data);
     });
   }
 }
