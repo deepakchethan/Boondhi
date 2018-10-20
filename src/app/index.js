@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 app.post('/mine', (req, res) => {
   blockchain.addBlock(req.body.data);
   res.redirect('/blocks');
+  p2pServer.synchronizeChains();
 });
 
 app.get('/blocks', (req, res) => {
