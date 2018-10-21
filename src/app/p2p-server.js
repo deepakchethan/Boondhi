@@ -1,11 +1,10 @@
 const WebSocket = require('ws');
 
 const P2P_PORT = process.env.P2P_PORT || 5001;
-2  
+
 const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
 
 class P2pServer {
-
   /*
   * @argument blockchain current instance of blockchain
   * @argument Array of sockets the server is listening on

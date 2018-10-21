@@ -1,11 +1,13 @@
 const SHA256 = require('crypto-js/sha256');
+const { DIFFICULTY } = require('../../config');
 
 class Block {
-  constructor(timeStamp, prevHash, currHash, boondhis) {
+  constructor(timeStamp, prevHash, currHash, boondhis, nonce) {
     this.timeStamp = timeStamp;
     this.prevHash = prevHash;
     this.currHash = currHash;
     this.boondhis = boondhis;
+    this.nonce = nonce;
   }
 
   toString() {
@@ -13,6 +15,7 @@ class Block {
       Timestamp: ${this.timeStamp}
       Last Hash: ${this.prevHash}
       Hash     : ${this.currHash}
+      Nonce    : ${this.nonce}
       Boondhis : ${this.boondhis}`;
   }
 
@@ -20,7 +23,7 @@ class Block {
   * Method that creates and returns genesis block
   */
   static genesis() {
-    return new this('0000', '0000', Block.hash('0000', '0000', {}), {});
+    return new this('0000', '0000', Block.hash('0000', '0000', {}), {}, 0);
   }
 
   /*
@@ -32,9 +35,15 @@ class Block {
   static mineBlock(lastBlock, boondhis) {
     const timeStamp = Date.now();
     const prevHash = lastBlock.currHash;
-    const currHash = Block.hash(timeStamp, prevHash, boondhis);
-
-    return new this(timeStamp, prevHash, currHash, boondhis);
+   
+    let nonce = 0;
+    let currHash;
+    // Poof of work system algorithm for consensus
+    do {
+      nonce += 1;
+      currHash = Block.hash(timeStamp, prevHash, boondhis, nonce);
+    } while (currHash.substr(0, DIFFICULTY) !== '0'.repeat(DIFFICULTY));
+    return new this(timeStamp, prevHash, currHash, boondhis, nonce);
   }
 
   /*
@@ -43,8 +52,8 @@ class Block {
   * @return hash of the given block
   */
   static hashOfBlock(block) {
-    const { timeStamp, prevHash, boondhis } = block;
-    return this.hash(timeStamp, prevHash, boondhis);
+    const { timeStamp, prevHash, boondhis, nonce } = block;
+    return this.hash(timeStamp, prevHash, boondhis, nonce);
   }
 
   /*
@@ -53,8 +62,8 @@ class Block {
   * @param prevHash hash of the previous block in a blockchain
   * @param boondhis the object containing the transactions
   */
-  static hash(timeStamp, prevHash, boondhis) {
-    return SHA256(`${timeStamp}${prevHash}${boondhis}`).toString();
+  static hash(timeStamp, prevHash, boondhis, nonce) {
+    return SHA256(`${timeStamp}${prevHash}${boondhis}${nonce}`).toString();
   }
 }
 
