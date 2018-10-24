@@ -25,7 +25,7 @@ class Block {
   * Method that creates and returns genesis block
   */
   static genesis() {
-    return new this('0000', '0000', Block.hash('0000', '0000', {}, 0, DIFFICULTY), {}, 0, DIFFICULTY);
+    return new this('0000', '0000', Block.hash('0000', '0000', [], 0, DIFFICULTY), [], 0, DIFFICULTY);
   }
 
   /*

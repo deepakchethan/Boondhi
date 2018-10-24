@@ -96,7 +96,6 @@ describe('Updaing transaction test', () => {
     });
 
     it('reward the miners wallet', () => {
-      console.log(transaction);
       expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount).toEqual(MINING_REWARD);
     });
   });

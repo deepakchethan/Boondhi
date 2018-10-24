@@ -1,6 +1,7 @@
 const { INITIAL_BALANCE } = require('../../config');
 const ChainUtil = require('./chainutil');
 const Transaction = require('../models/transaction');
+const Blockchain = require('../models/chain');
 
 class Wallet {
   constructor() {
@@ -15,12 +16,38 @@ class Wallet {
     balance    : ${this.balance}`;
   }
 
+  calculateBalance(blockchain) {
+    let balance = this.balance;
+    let transactions = [];
+    let recentInput;
+    let startTime;
+    blockchain.chain.forEach(block => block.boondhis.forEach(transaction => transactions.push(transaction)));
+    const walletInputs = transactions.filter(transaction => transaction.input.address === this.publicKey);
+    if (walletInputs.length > 0) {
+      recentInput = walletInputs.reduce((prev, current) => prev.input.timeStamp > current.input.timeStamp ? prev : current);
+      balance = recentInput.outputs.find(output => output.address === this.publicKey).amount;
+      startTime = recentInput.input.timeStamp;
+    }
+    transactions.forEach(transaction => {
+      if (transaction.input.timeStamp > startTime) {
+        transaction.outputs.find(output => {
+          if (output.address === this.publicKey) {
+            balance += output.amount;
+          }
+        });
+      }
+    });
+    
+    return balance;
+  }
+
   
   sign(dataHash) {
     return this.keyPair.sign(dataHash);
   }
 
-  createTransaction(recipient, amount, transactionPool) {
+  createTransaction(recipient, amount, blockchain, transactionPool) {
+    this.balance = this.calculateBalance(blockchain);
     if (amount > this.balance) {
       return;
     }

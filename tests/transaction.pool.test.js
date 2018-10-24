@@ -1,16 +1,20 @@
 const TransactionPool = require('../src/wallet/transaction-pool');
 const Transaction = require('../src/models/transaction');
+const Blockchain = require('../src/models/chain');
+
 const Wallet = require('../src/wallet/index');
 
 describe('Transaction Pool Tests', () => {
   let transactionPool;
   let wallet;
+  let bc;
   let transaction;
 
   beforeEach(() => {
     transactionPool = new TransactionPool();
-    wallet = new Wallet(); 
-    transaction = wallet.createTransaction('r4and-4dr355', 30, transactionPool)
+    wallet = new Wallet();
+    bc = new Blockchain();
+    transaction = wallet.createTransaction('r4and-4dr355', 30, bc, transactionPool)
   });
 
   it('adds transactions to the pool', () => {
@@ -35,7 +39,7 @@ describe('Transaction Pool Tests', () => {
       validTransactions = [...transactionPool.transactions];
       for (let i = 0; i < 6; i += 1) {
         wallet = new Wallet();
-        transaction = wallet.createTransaction('akldsaskl', 30, transactionPool);
+        transaction = wallet.createTransaction('akldsaskl', 30, bc, transactionPool);
         if (i % 2 === 0) {
           transaction.input.amount = 2344565;
         } else {

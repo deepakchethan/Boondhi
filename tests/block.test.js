@@ -15,8 +15,8 @@ describe('Block Tests', () => {
     const block = Block.genesis();
     expect(block.timeStamp).toBe('0000');
     expect(block.prevHash).toBe('0000');
-    expect(block.currHash).toBe(Block.hash('0000', '0000', {}, 0, DIFFICULTY));
-    expect(block.boondhis).toEqual({});
+    expect(block.currHash).toBe(Block.hash('0000', '0000', [], 0, DIFFICULTY));
+    expect(block.boondhis).toEqual([]);
   });
   it('should have created a first block with values provided', () => {
     const block = Block.mineBlock(Block.genesis(), {});
