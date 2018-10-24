@@ -1,5 +1,5 @@
 const WebSocket = require('ws');
-//// const TransactionPool = require('../wallet/transaction-pool');
+
 
 const MESSAGE_TYPES = {
   chain: 'CHAIN',

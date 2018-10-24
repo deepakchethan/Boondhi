@@ -9,9 +9,8 @@ describe('Transaction Pool Tests', () => {
 
   beforeEach(() => {
     transactionPool = new TransactionPool();
-    wallet = new Wallet();
-    transaction = Transaction.newTransaction(wallet, 'j1ng4-1a1a', 30);
-    transactionPool.updateOrAddTransaction(transaction);
+    wallet = new Wallet(); 
+    transaction = wallet.createTransaction('r4and-4dr355', 30, transactionPool)
   });
 
   it('adds transactions to the pool', () => {
@@ -23,6 +22,31 @@ describe('Transaction Pool Tests', () => {
     const newTransaction = transaction.update(wallet, 'j00m1a-p@pi', 40);
     transactionPool.updateOrAddTransaction(newTransaction);
     expect(JSON.stringify(transactionPool.transactions.find(trans => trans.id === newTransaction.id))).not.toEqual(oldTransaction);
+  });
+
+  describe('mixing valid and currupt transaction', () => {
+    let validTransactions;
+
+    beforeEach(() => {
+      validTransactions = [...transactionPool.transactions];
+      for (let i = 0; i < 6; i += 1) {
+        wallet = new Wallet();
+        transaction = wallet.createTransaction('akldsaskl', 30, transactionPool);
+        if (i % 2 === 0) {
+          transaction.input.amount = 2344565;
+        } else {
+          validTransactions.push(transaction);
+        }
+      }
+    });
+
+    it('shows a difference between valid and corrupt transactions', () => {
+      expect(JSON.stringify(transactionPool.transactions)).not.toEqual(JSON.stringify(validTransactions));
+    });
+
+    it('grabs valid transactions', () => {
+      expect(transactionPool.getValidTransactions()).toEqual(validTransactions);
+    });
   });
 });
 
