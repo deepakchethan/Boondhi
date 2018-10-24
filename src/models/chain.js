@@ -17,6 +17,7 @@ class Chain {
     const prevBlock = this.chain[this.chain.length - 1];
     const block = Block.mineBlock(prevBlock, boondhi);
     this.chain.push(block);
+    return block;
   }
 
   /*
