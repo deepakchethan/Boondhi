@@ -17,7 +17,25 @@ class Transaction {
     transaction.outputs.push(...[
       { amount: sendersWallet.balance - amount, address: sendersWallet.publicKey },
       { amount, address: recieverWallet }]);
-      return transaction;
+    this.signTransaction(transaction, sendersWallet);
+    return transaction;
+  }
+
+  static signTransaction(transaction, sendersWallet) {
+    transaction.input = {
+      timeStamp: Date.now(),
+      amount: sendersWallet.balance,
+      address: sendersWallet.publicKey,
+      signature: sendersWallet.sign(ChainUtil.hash(transaction.outputs)),
+    };
+  }
+
+  static verifyTransaction(transaction) {
+    return ChainUtil.verifySignature(
+      transaction.input.address,
+      transaction.input.signature,
+      ChainUtil.hash(transaction.outputs),
+    );
   }
 }
 

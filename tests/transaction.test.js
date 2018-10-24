@@ -42,3 +42,27 @@ describe('Transactiom Negative Tests', () => {
     expect(transaction).toEqual(undefined);
   });
 });
+
+describe('Signing mechanism tests', () => {
+  let transaction;
+  let wallet;
+  let reciever;
+  let amount;
+
+  beforeEach(() => {
+    wallet = new Wallet();
+    amount = 50;
+    reciever = 'r3c1p23nt';
+    transaction = Transaction.newTransaction(wallet, reciever, amount);
+  });
+
+  it('validates valid transaction', () => {
+    expect(Transaction.verifyTransaction(transaction)).toBeTruthy();
+  });
+
+  it('invalidates a corrupt transaction', () => {
+    transaction = Transaction.newTransaction(wallet, reciever, 50000);
+    expect(transaction).toEqual(undefined);
+  });
+
+});
