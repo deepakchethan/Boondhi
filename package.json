@@ -6,7 +6,11 @@
   "scripts": {
     "test": "jest",
     "start": "node ./src/app",
-    "dev": "nodemon ./src/app"
+    "dev": "nodemon ./src/app",
+    "dummy": "node addDummyBlocks.js"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
@@ -33,7 +37,9 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "crypto-js": "^3.1.9-1",
+    "elliptic": "^6.4.1",
     "express": "^4.16.4",
+    "uuid": "^3.3.2",
     "ws": "^6.1.0"
   }
 }
