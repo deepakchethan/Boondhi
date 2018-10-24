@@ -4,6 +4,7 @@ const Chain = require('../models/chain');
 const P2pServer = require('./p2p-server');
 const Wallet = require('../wallet/index');
 const TransactionPool = require('../wallet/transaction-pool');
+const Miner = require('../models/miner');
 
 const HTTP_PORT = process.env.HTTP_PORT || 3001;
 const app = express();
@@ -11,6 +12,7 @@ const blockchain = new Chain();
 const wallet = new Wallet();
 const tp = new TransactionPool();
 const p2pServer = new P2pServer(blockchain, tp);
+const miner = new Miner(blockchain, tp, wallet, p2pServer);
 
 app.use(bodyParser.json());
 
@@ -44,6 +46,11 @@ app.post('/transact', (req, res) => {
 
 app.get('/public-key', (req, res) => {
   res.json({ publicKey: wallet.publicKey});
+});
+
+app.get('/mine-transactions', (req, res) => {
+  const block = miner.mine();
+  res.redirect('/blocks');
 });
 
 p2pServer.listen();

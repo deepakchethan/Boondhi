@@ -14,6 +14,10 @@ class TransactionPool {
     }
   }
 
+  clear() {
+    this.transactions = [];
+  }
+  
   existingTransaction(address) {
     return this.transactions.find(trans => trans.input.address === address);
   }

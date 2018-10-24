@@ -24,6 +24,10 @@ describe('Transaction Pool Tests', () => {
     expect(JSON.stringify(transactionPool.transactions.find(trans => trans.id === newTransaction.id))).not.toEqual(oldTransaction);
   });
 
+  it('clears the transactions', () => {
+    transactionPool.clear();
+    expect(transactionPool.transactions).toEqual([]);
+  });
   describe('mixing valid and currupt transaction', () => {
     let validTransactions;
 

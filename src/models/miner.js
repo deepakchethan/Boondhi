@@ -1,3 +1,6 @@
+const Transaction = require('../models/transaction');
+const Wallet = require('../wallet/index');
+
 class Miner {
   constructor(blockchain, transactionPool, wallet, p2pServer) {
     this.blockchain = blockchain;
@@ -8,7 +11,12 @@ class Miner {
 
   mine() {
     const validTransactions = this.transactionPool.getValidTransactions();
-    
+    validTransactions.push(Transaction.rewardTransaction(this.wallet, Wallet.blockchainWallet()));
+    const block = this.blockchain.addBlock(validTransactions);
+    this.p2pServer.synchronizeChains();
+    this.transactionPool.clear();
+    this.p2pServer.broadcastClearTransactions();
+    return block;
   }
 }
 

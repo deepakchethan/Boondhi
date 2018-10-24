@@ -15,6 +15,7 @@ class Wallet {
     balance    : ${this.balance}`;
   }
 
+  
   sign(dataHash) {
     return this.keyPair.sign(dataHash);
   }
@@ -33,6 +34,12 @@ class Wallet {
     }
 
     return transaction;
+  }
+
+  static blockchainWallet() {
+    const blockchainWallet = new this();
+    blockchainWallet.address = 'blockchain-wallet';
+    return blockchainWallet;
   }
 }
 
